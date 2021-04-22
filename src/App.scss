@@ -1,0 +1,125 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+html,
+body,
+#root {
+  background: #343a40 !important;
+  min-height: 100%;
+  display: block;
+}
+/*============================================*/
+/*        TOGGLE
+/*============================================*/
+// Color Variables
+$green: #2ecc71;
+$lightgray: lightgray;
+$background: whitesmoke;
+
+@mixin inactiveMixin {
+  content: "";
+  position: absolute;
+  display: block;
+}
+
+@mixin beforeAnimation {
+  transition: 0.2s cubic-bezier(0.24, 0, 0.5, 1);
+}
+
+@mixin afterAnimation {
+  box-shadow: 0 0 0 1px hsla(0, 0%, 0%, 0.1), 0 4px 0px 0 hsla(0, 0%, 0%, 0.04), 0 4px 9px hsla(0, 0%, 0%, 0.13),
+    0 3px 3px hsla(0, 0%, 0%, 0.05);
+  transition: 0.35s cubic-bezier(0.54, 1.6, 0.5, 1);
+}
+
+.toggle-col {
+  position: relative;
+}
+// Mobile Toggle Switch
+.toggleWrapper {
+  margin: auto;
+  width: 25px;
+  cursor: pointer;
+  input {
+    &.mobileToggle {
+      opacity: 0; // hides checkbox
+      position: absolute;
+      & + label {
+        position: relative;
+        display: inline-block;
+        user-select: none;
+        transition: 0.4s ease;
+        height: 25px;
+        width: 40px;
+        border: 1px solid #e4e4e4;
+        border-radius: 60px;
+        &:before {
+          @include inactiveMixin;
+          @include beforeAnimation;
+          height: 25px;
+          width: 40px;
+          top: 0;
+          left: 0;
+          border-radius: 30px;
+        }
+        &:after {
+          @include inactiveMixin;
+          @include afterAnimation;
+          background: $background;
+          height: 25px;
+          width: 25px;
+          left: -1px;
+          top: -1px;
+          border-radius: 60px;
+        }
+      }
+      // When Active
+      &:checked {
+        & + label:before {
+          background: $green; // Active Color
+          transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
+          top: -1px;
+        }
+        & + label:after {
+          left: 40px - 25px;
+        }
+      }
+    }
+  }
+}
