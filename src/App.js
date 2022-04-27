@@ -4,23 +4,22 @@ import pahoMqtt from "paho-mqtt/paho-mqtt";
 import { Button, Col, Container, Row } from "react-bootstrap";
 class App extends Component {
   state = {
-    subject: "VirtualSmartHome/",
+    subject: "VirtualSmartHome/v2/",
     host: "broker.emqx.io",
     port: "8084",
     // host: "broker.mqttdashboard.com",
     // port: "8000",
     rooms: [
-      { Name: "Bedroom", LightOn: false },
-      { Name: "Hallway", LightOn: false },
-      { Name: "Library", LightOn: false },
-      { Name: "Bathroom", LightOn: false },
-      { Name: "F1_Stairs", LightOn: false },
-      { Name: "LivingRoom", LightOn: false },
-      { Name: "Garage", LightOn: false },
-      { Name: "GF_Stairs", LightOn: false },
-      { Name: "Kitchen", LightOn: false },
-      { Name: "DiningRoom", LightOn: false },
-      { Name: "Basement", LightOn: false },
+      { Name: "Bedroom_1", displayStyle: "block" },
+      { Name: "Bedroom_2", displayStyle: "block" },
+      { Name: "Bedroom_3", displayStyle: "block" },
+      { Name: "Hallway_1F", displayStyle: "block" },
+      { Name: "Bathroom_1F", displayStyle: "block" },
+      { Name: "Bathroom_GF", displayStyle: "block" },
+      { Name: "Kitchen", displayStyle: "block" },
+      { Name: "Stairs", displayStyle: "block" },
+      { Name: "Living_Room", displayStyle: "block" },
+      { Name: "Cloakroom", displayStyle: "block" },
     ],
     topic: "",
     client: {},
@@ -28,12 +27,28 @@ class App extends Component {
     connected: false,
   };
 
+  toggleConnect = () => {
+    if (this.state.connected) {
+      console.log("Disconnect");
+      this.startDisconnect();
+    } else {
+      console.log("Connect");
+      this.startConnect();
+    }
+    const connected = !this.state.connected;
+    this.setState({ connected });
+  };
+
   // Called after form input is processed
   startConnect = () => {
     // Generate a random client ID
     let clientID = "clientID-" + parseInt(Math.random() * 100);
 
-    const client = new pahoMqtt.Client(this.state.host, Number(this.state.port), clientID);
+    const client = new pahoMqtt.Client(
+      this.state.host,
+      Number(this.state.port),
+      clientID
+    );
     console.log(client);
     // Initialize new Paho client connection
 
@@ -68,7 +83,10 @@ class App extends Component {
   };
 
   changeLight = (destination, payload) => {
-    let room_name = destination.substring(this.state.subject.length, destination.indexOf("/Light"));
+    let room_name = destination.substring(
+      this.state.subject.length,
+      destination.indexOf("/Light")
+    );
     console.log("Payload", payload);
     console.log("Room Name", room_name);
     console.log("State", this.state);
@@ -87,7 +105,12 @@ class App extends Component {
     if (!this.state.connected) return;
     let lightOn = this.state.rooms.find((r2) => r2.Name === roomName).LightOn;
 
-    this.state.client.publish(`${this.state.subject}${roomName}/Light`, !lightOn ? "1" : "0", 0, true);
+    this.state.client.publish(
+      `${this.state.subject}${roomName}/Light`,
+      !lightOn ? "1" : "0",
+      0,
+      true
+    );
   };
 
   // Called when a message arrives
@@ -119,7 +142,11 @@ class App extends Component {
             >
               Connect
             </Button>
-            <Button variant="primary" disabled={!this.state.connected} onClick={() => this.startDisconnect()}>
+            <Button
+              variant="primary"
+              disabled={!this.state.connected}
+              onClick={() => this.startDisconnect()}
+            >
               Disconnect
             </Button>
           </Col>
@@ -136,7 +163,9 @@ class App extends Component {
                   name={`toggle_${r.Name}`}
                   className="mobileToggle"
                   id={`toggle_${r.Name}`}
-                  checked={this.state.rooms.find((r2) => r2.Name === r.Name).LightOn}
+                  checked={
+                    this.state.rooms.find((r2) => r2.Name === r.Name).LightOn
+                  }
                   onChange={() => this.toggleLight(r.Name)}
                 />
                 <label htmlFor={`toggle_${r.Name}`}></label>
