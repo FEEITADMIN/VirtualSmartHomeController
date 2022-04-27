@@ -35,8 +35,6 @@ class App extends Component {
       console.log("Connect");
       this.startConnect();
     }
-    const connected = !this.state.connected;
-    this.setState({ connected });
   };
 
   // Called after form input is processed
@@ -130,25 +128,25 @@ class App extends Component {
       <Container fluid={true} className="text-center bg-dark text-light">
         <Row className="py-4">
           <Col>
-            <h1>Virtual Smart Home Controller</h1>
+            <h1>Connected Homes Controller</h1>
           </Col>
         </Row>
         <Row className="my-5">
           <Col>
             <Button
-              variant={this.state.connected ? "success" : "danger"}
-              disabled={this.state.connected}
-              onClick={() => this.startConnect()}
+              variant={this.state.connected ? "danger" : "success"}
+              // disabled={this.state.connected}
+              onClick={() => this.toggleConnect()}
             >
-              Connect
+              {this.state.connected ? "Disconnect" : "Connect"}
             </Button>
-            <Button
+            {/* <Button
               variant="primary"
               disabled={!this.state.connected}
               onClick={() => this.startDisconnect()}
             >
               Disconnect
-            </Button>
+            </Button> */}
           </Col>
         </Row>
         {this.state.rooms.map((r) => (
