@@ -1,10 +1,10 @@
 # Virtual Smart Home Controller
 
-This app is a helper application written to support [https://github.com/feedadmin/VirtualSmartHome](https://github.com/feedadmin/VirtualSmartHome)
+This app is a helper application written to support [https://github.com/feeitadmin/VirtualSmartHome](https://github.com/feeitadmin/VirtualSmartHome)
 
-To use this application head to https://feedadmin.github.io/VirtualSmartHome/ and click connect.
+To use this application head to https://feeitadmin.github.io/VirtualSmartHome/ and click connect.
 
-Then, navigate to [https://feedadmin.github.io/VirtualSmartHomeController/](https://feedadmin.github.io/VirtualSmartHomeController/) and click connect on there also. You should now be able to turn the lights on and off within the VirtualSmartHome.
+Then, navigate to [https://feeitadmin.github.io/VirtualSmartHomeController/](https://feeitadmin.github.io/VirtualSmartHomeController/) and click connect on there also. You should now be able to turn the lights on and off within the VirtualSmartHome.
 
 ## Installation
 
